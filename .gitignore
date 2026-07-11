@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# Model Cache
+runs/
+
+# Uploads
+uploads/
+
+# Node
+frontend/node_modules/
+node_modules/
+
+# React
+frontend/dist/
+dist/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

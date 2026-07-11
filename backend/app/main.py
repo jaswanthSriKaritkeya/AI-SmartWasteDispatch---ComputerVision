@@ -9,7 +9,7 @@ import cv2
 import os
 
 origins = [
-    "http://localhost:5175",
+    "http://localhost:5173",
 ]
 
 app = FastAPI()

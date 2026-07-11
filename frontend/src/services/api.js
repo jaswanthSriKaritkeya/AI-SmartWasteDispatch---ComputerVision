@@ -6,7 +6,10 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-export const predictWaste = async (imageFile, wasteType) => {
+export const predictWaste = async (
+  imageFile,
+  wasteType
+) => {
   const formData = new FormData();
   formData.append('image', imageFile);
   formData.append('waste_type', wasteType);
