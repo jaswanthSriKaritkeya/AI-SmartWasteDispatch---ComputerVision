@@ -9,6 +9,9 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Notification from './components/Notification';
 import { NotificationProvider } from './hooks/useNotification';
+import Location from "./components/Location";
+import Map from "./components/Map";
+import LocationMap from "./components/LocationMap";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
               <Route path="/fleet-dashboard" element={<FleetDashboard />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/location" element={<Location />} />
+              <Route path="/map" element={<Map />} />
+              <Route path="/location-map" element={<LocationMap />} />
             </Routes>
           </main>
           
