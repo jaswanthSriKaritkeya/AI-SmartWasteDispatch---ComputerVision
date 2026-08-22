@@ -9,6 +9,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Notification from './components/Notification';
 import { NotificationProvider } from './hooks/useNotification';
+import Camera from "./components/Camera";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/fleet-dashboard" element={<FleetDashboard />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/camera" element={<Camera />} />
             </Routes>
           </main>
           
