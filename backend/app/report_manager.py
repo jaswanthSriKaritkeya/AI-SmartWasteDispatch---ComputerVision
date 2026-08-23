@@ -1,30 +1,80 @@
+from datetime import datetime
 import uuid
 
-class ReportManager:
+from app.database import reports_collection
 
-    def __init__(self):
-        self.reports = []
+
+class ReportManager:
 
     def create_report(self, report_data):
 
         report = {
             "report_id": str(uuid.uuid4())[:8],
             **report_data,
-            "status": "Pending"
+            "status": "pending",
+            "created_at": datetime.utcnow()
         }
 
-        self.reports.append(report)
+        result = reports_collection.insert_one(report)
+
+        # Convert MongoDB ObjectId
+        report["_id"] = str(result.inserted_id)
 
         return report
 
+
+    def get_report(self, report_id):
+
+        report = reports_collection.find_one({
+            "report_id": report_id
+        })
+
+        if report:
+            report["_id"] = str(report["_id"])
+
+        return report
+
+
     def get_all_reports(self):
-        return self.reports
+
+        reports = list(
+            reports_collection.find()
+        )
+
+        for report in reports:
+            report["_id"] = str(report["_id"])
+
+        return reports
+
+
+    def get_reports_by_citizen(self, citizen_id):
+
+        reports = list(
+            reports_collection.find({
+                "citizen_id": citizen_id
+            }).sort("created_at", -1)
+        )
+
+        for report in reports:
+            report["_id"] = str(report["_id"])
+
+        return reports
+
 
     def update_status(self, report_id, status):
 
-        for report in self.reports:
-            if report["report_id"] == report_id:
-                report["status"] = status
-                return report
+        result = reports_collection.update_one(
+            {
+                "report_id": report_id
+            },
+            {
+                "$set": {
+                    "status": status
+                }
+            }
+        )
 
-        return None
+        if result.matched_count == 0:
+            return None
+
+        return self.get_report(report_id)

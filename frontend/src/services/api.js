@@ -1,40 +1,27 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000';
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
 });
 
-export const predictWaste = async (
-  imageFile,
-  wasteType
-) => {
-  const formData = new FormData();
-  formData.append('image', imageFile);
-  formData.append('waste_type', wasteType);
-
-  try {
-    const response = await api.post('/predict', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error during prediction:', error);
-    throw error;
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-};
+  return config;
+});
 
-export const getReports = async () => {
-  try {
-    const response = await api.get('/reports');
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching reports:', error);
-    throw error;
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
   }
-};
+);
 
-export default api;
+export default API;

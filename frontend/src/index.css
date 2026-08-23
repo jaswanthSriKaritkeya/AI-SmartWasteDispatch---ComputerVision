@@ -4,35 +4,21 @@
 
 @layer base {
   body {
-    @apply bg-black text-white font-sans antialiased overflow-x-hidden;
+    @apply bg-white text-gray-900 font-sans antialiased;
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-dark-card/60 backdrop-blur-md border border-white/10 shadow-glass rounded-2xl;
+  .btn-primary {
+    @apply bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition-colors duration-200 font-medium;
   }
-  
-  .glass-hover {
-    @apply transition-all duration-300 hover:border-primary/50 hover:shadow-glow hover:-translate-y-1;
+  .btn-secondary {
+    @apply bg-white text-black px-6 py-3 rounded border border-gray-300 hover:bg-gray-50 transition-colors duration-200 font-medium;
   }
-  
-  .text-glow {
-    text-shadow: 0 0 10px rgba(126, 217, 87, 0.7);
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-colors;
   }
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #0F0F0F;
-}
-::-webkit-scrollbar-thumb {
-  background: #1B1B1B;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #7ED957;
+  .card {
+    @apply bg-white border border-gray-200 rounded shadow-subtle p-6;
+  }
 }
